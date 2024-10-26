@@ -18,7 +18,8 @@ function add(ipStr) {
     let delimeter = ',';
     
     delimeter = getDelimeterArray(ipStr);
-    strArray = ipStr.split(delimeter);
+    validatedStr = ipStr.replace(/(\n)/g, delimeter);
+    strArray = validatedStr.split(delimeter);
     
     for (let i = 0; i < strArray.length; i++) {
         if (!strArray[i] && strArray[i].includes('\n')) {
@@ -26,8 +27,12 @@ function add(ipStr) {
             for (let j = 0; j < appendArray.length; j++) {
                 strArray.push(appendArray[i]);
             }
+            console.log(strArray)
         }
         let current = parseInt(strArray[i]);
+        if (current < 0) {
+            result = "negative numbers not allowed " + current;
+        }
         result = (current > 0) ? (result + current) : result;
     }
     return result;
