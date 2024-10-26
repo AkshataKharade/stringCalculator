@@ -1,4 +1,3 @@
-
 function getDelimeterArray(ipStr) {
     let delimeter = ',';
     if(
@@ -13,18 +12,6 @@ function getDelimeterArray(ipStr) {
     return delimeter;
 }
 
-function getStrArray(ipStr, delimeter) {
-    let strArray = [];
-    console.log('here--->', ipStr)
-    if(ipStr.includes('\n')) {
-       ipStr.replace('//\n', delimeter) 
-    }
-    console.log(ipStr);
-
-    strArray = ipStr.split(delimeter);
-    return strArray;
-}
-
 function add(ipStr) {
     let strArray = [];
     let result = 0;
@@ -33,16 +20,21 @@ function add(ipStr) {
     delimeter = getDelimeterArray(ipStr);
     strArray = ipStr.split(delimeter);
     
-    let tempStrArray = getStrArray(ipStr, delimeter);
-    
     for (let i = 0; i < strArray.length; i++) {
+        if (!strArray[i] && strArray[i].includes('\n')) {
+            let appendArray = strArray[i].split('\n');
+            for (let j = 0; j < appendArray.length; j++) {
+                strArray.push(appendArray[i]);
+            }
+        }
         let current = parseInt(strArray[i]);
-        console.log(typeof current);
         result = (current > 0) ? (result + current) : result;
     }
     return result;
 }
 
-let str = "1\n2,3";
+// let str = "1,5";
+// let str = "1\n2,3";
+let str = "//;\n1;2";
 let result = add(str);
 console.log("result: ", result);
